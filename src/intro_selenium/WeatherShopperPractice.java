@@ -26,19 +26,19 @@ public class WeatherShopperPractice
         int actualTemp = Integer.parseInt(splitActualTemp);
 
         /**気温が19度以下なら保湿剤を買う。気温が34度以上の場合は、日焼け止めをお買い求める*/
-        if( actualTemp < 16)
+        if( actualTemp <= 16)
         {   
             driver.findElement(By.linkText("Buy moisturizers")).click();
-        }else if(actualTemp > 34 )
+        }else if(actualTemp >= 34 )
         {
             driver.findElement(By.linkText("Buy sunscreens")).click();
         }
        
         List <WebElement> productName = driver.findElements(By.cssSelector("div[class='text-center col-4']"));
         List<WebElement> aloeProducts = productName.stream().filter(s->s.getText().contains("Aloe")).collect(Collectors.toList());
-       
-        
-        
+       List<String> aloeprice =  aloeProducts.stream().map(s->s.findElement(By.xpath("//*[contains(text(),'Price')]"))
+        .getText()).collect(Collectors.toList());
+        aloeprice.forEach(a->System.out.println(a));
         
         
         //String lowestPrice = prices.stream().sorted(Collections.reverseOrder()).findFirst().toString();
@@ -46,15 +46,17 @@ public class WeatherShopperPractice
        
         
 
-        
+        List<Integer> prices = new ArrayList<>();
         for(int i = 0;i<aloeProducts.size();i++)
         {
            System.out.println(aloeProducts.get(i).getText()); 
-           System.out.println ( "price is " + aloeProducts.get(i).findElement(By.xpath("//div/p[2]")).getText());
-           String a = aloeProducts.get(i).findElement(By.xpath("//div/p[2]")).getText();
-           a.split("Rs.");
+           System.out.println ( "price is " + aloeProducts.get(i).findElement(By.xpath("//*[contains(text(),'Price')]")).getText());
+           String a = aloeProducts.get(i).findElement(By.xpath("//*[contains(text(),'Price')]")).getText();
+           String[] b =  a.split("Rs.");
+           int actual= Integer.parseInt(b[1].trim());
+            prices.add(actual);
         }
-       
+       System.out.println(prices);
     }
         
         
