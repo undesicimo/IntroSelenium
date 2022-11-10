@@ -47,32 +47,18 @@ public class WeatherShopperPractice
         
 
         
-        List <String> prices = new ArrayList<>();
         for(int i = 0;i<aloeProducts.size();i++)
         {
            System.out.println(aloeProducts.get(i).getText()); 
            System.out.println ( "price is " + aloeProducts.get(i).findElement(By.xpath("//div/p[2]")).getText());
-           String unsplitPrice =  aloeProducts.get(i).findElement(By.xpath("//div/p[2]")).getText();
-           String[] splitPrice = unsplitPrice.split(".");
-            String actualPrice = splitPrice[1].trim();
-           if( aloeProducts.size()> i)
-           {
-            
-               prices.add(actualPrice);
-           }
-        
-        
+           String a = aloeProducts.get(i).findElement(By.xpath("//div/p[2]")).getText();
+           a.split("Rs.");
         }
        
     }
         
         
 
-        public static String getPrice(WebElement s)
-        {
-            String prices = s.findElement(By.xpath("//div/p[2]")).getText();
-            return prices;
-        }
         
     }
     
