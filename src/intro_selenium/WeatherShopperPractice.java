@@ -36,9 +36,8 @@ public class WeatherShopperPractice
        
         List <WebElement> productName = driver.findElements(By.cssSelector("div[class='text-center col-4']"));
         List<WebElement> aloeProducts = productName.stream().filter(s->s.getText().contains("Aloe")).collect(Collectors.toList());
-       List<String> aloeprice =  aloeProducts.stream().map(s->s.findElement(By.xpath("//*[contains(text(),'Price')]"))
-        .getText()).collect(Collectors.toList());
-        aloeprice.forEach(a->System.out.println(a));
+      
+        
         
         
         //String lowestPrice = prices.stream().sorted(Collections.reverseOrder()).findFirst().toString();
