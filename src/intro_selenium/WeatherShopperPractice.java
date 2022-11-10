@@ -1,7 +1,10 @@
 package intro_selenium;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -10,6 +13,8 @@ import org.openqa.selenium.chrome.ChromeDriver;
 
 public class WeatherShopperPractice
 {
+
+
 
     public static void main(String[] args)
     {
@@ -30,29 +35,46 @@ public class WeatherShopperPractice
         }
        
         List <WebElement> productName = driver.findElements(By.cssSelector("div[class='text-center col-4']"));
-        final List<WebElement> aloeProducts = productName.stream().filter(s->s.getText().contains("Aloe")).collect(Collectors.toList());
-        List <String> prices = aloeProducts.stream().map(s->getPrice(s)).collect(Collectors.toList());
-        String lowestPrice = prices.stream().sorted().findFirst().toString();
+        List<WebElement> aloeProducts = productName.stream().filter(s->s.getText().contains("Aloe")).collect(Collectors.toList());
        
+        
+        
+        
+        
+        //String lowestPrice = prices.stream().sorted(Collections.reverseOrder()).findFirst().toString();
+        
        
-       //.map(s->getPrice(s)).collect(Collectors.toList());
+        
 
-
-
+        
+        List <String> prices = new ArrayList<>();
         for(int i = 0;i<aloeProducts.size();i++)
         {
            System.out.println(aloeProducts.get(i).getText()); 
            System.out.println ( "price is " + aloeProducts.get(i).findElement(By.xpath("//div/p[2]")).getText());
+           String unsplitPrice =  aloeProducts.get(i).findElement(By.xpath("//div/p[2]")).getText();
+           String[] splitPrice = unsplitPrice.split(".");
+            String actualPrice = splitPrice[1].trim();
+           if( aloeProducts.size()> i)
+           {
+            
+               prices.add(actualPrice);
+           }
+        
+        
         }
-        driver.quit();
+       
+    }
+        
         
 
         public static String getPrice(WebElement s)
+        {
             String prices = s.findElement(By.xpath("//div/p[2]")).getText();
             return prices;
         }
         
     }
     
+
     
-}
